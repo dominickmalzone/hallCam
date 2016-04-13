@@ -1,2 +1,3 @@
 # hallCam
-Simple motion tracker for rpi using openCv
+Simple motion tracker for rpi using openCV
+brew install openCV
