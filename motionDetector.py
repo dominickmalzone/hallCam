@@ -1,15 +1,38 @@
+from hallcam.tempimage import TempImage
+from dropbox.client import DropboxOAuth2FlowNoRedirect
+from dropbox.client import DropboxClient
+#from picamera.array import PiRGBArray
+#from picamera import PiCamera
 import argparse
+import warnings
 import datetime
 import imutils
+import json
 import time
 import cv2
 
 #construct the argument parser and parse arguments
 ap = argparse.ArgumentParser()
-ap.add_argument('-v', '--video', help='path to the videoo file')
-ap.add_argument('-a', '--min-area', type=int, default=500, help='min area size')
+ap.add_argument('-c', '--conf', required=True,
+                help="path to the JSON configuration file")
 args = vars(ap.parse_args())
 
+#filter warnings, load config and initialzie db
+warnings.filterwarnings("ignore")
+conf = json.load(open(args["conf"]))
+client = None
+
+if conf["use_dropbox"]:
+    #connect to dropbox and start the session auth process
+    flow = DropboxOAuth2FlowNoRedirect(conf["dropbox_key"], conf["dropbox_secret"])
+    print "[INFO] Authorize this application: {}".format(flow.start())
+    authCode = raw_input("Enter auth code here: ").strip()
+
+    #finish auth and grab dropbox client
+    (accessToken, userID) = flow.finish(authCode)
+    client = DropboxClient(accessToken)
+    print "[SUCCESS] dropbox account linked"
+    
 #webcam yo, 0= use first cam detected 1=second cam detected
 cam = cv2.VideoCapture(0)
 time.sleep(0.25)
