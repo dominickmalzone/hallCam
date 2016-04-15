@@ -11,6 +11,8 @@
 
 Here's some screenshots:
 
-![still shot](www.dominickmalzone.com/img/detect1.png "Still shot ft. my cool pal Leon")
-![moving shot](www.dominickmalzone.com/img/detect2.png "My cool and fast pal Leon")
-![still shot](www.dominickmalzone.com/img/detect3.png "Some girl that thought I was creepy. Cant blame her")
+![still shot](http://www.dominickmalzone.com/img/detect1.png "Still shot ft. my cool pal Leon")
+
+![moving shot](http://www.dominickmalzone.com/img/detect2.png "My cool and fast pal Leon")
+
+![still shot](http://www.dominickmalzone.com/img/detect3.png "Some girl that thought I was creepy. Cant really blame her")
