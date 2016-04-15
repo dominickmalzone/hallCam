@@ -2,7 +2,6 @@ from hallcam.tempimage import TempImage
 from dropbox.client import DropboxOAuth2FlowNoRedirect
 from dropbox.client import DropboxClient
 from picamera.array import PiRGBArray
-#from picamera import PiCamera
 import argparse
 import warnings
 import datetime
@@ -24,7 +23,7 @@ conf = json.load(open(args["conf"]))
 client = None
 
 
-"""
+
 if conf["use_dropbox"]:
     #connect to dropbox and start the session auth process
     flow = DropboxOAuth2FlowNoRedirect(conf["dropbox_key"], conf["dropbox_secret"])
@@ -35,13 +34,13 @@ if conf["use_dropbox"]:
     (accessToken, userID) = flow.finish(authCode)
     client = DropboxClient(accessToken)
     print "[SUCCESS] dropbox account linked"
-"""
+
     
 #grab cam, set height width and fps
 cam = cv2.VideoCapture(0)
 cam.set(3,640)
 cam.set(4,480)
-cam.set(5,16)#frames
+cam.set(5,25)#frames
 rawCapture = PiRGBArray(cam, size=tuple(conf["resolution"]))
 
                         
@@ -115,8 +114,8 @@ while True:
                         #upload image to dropbox and cleanup temp image
                         print "[UPLOAD] {}".format(ts)
                         path = "{base_path}/{timestamp}.jpg".format(
-                            base_path=conf["drop_box_path"], timestamp=ts)
-                        clinet.put_file(path, open(t.path, "rb"))
+                            base_path=conf["dropbox_base_path"], timestamp=ts)
+                        client.put_file(path, open(t.path, "rb"))
                         t.cleanup()
                     #update the last uploaded timestamp and reset motion counter
                         lastUploaded = timestamp
